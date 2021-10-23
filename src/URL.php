@@ -6,7 +6,7 @@ class URL
 {
     private $uri = "";
 
-    public function __construct($uri = null)
+    public function __construct(string $uri = null)
     {
         $this->uri = $uri;
     }
@@ -16,9 +16,11 @@ class URL
         return $this->uri;
     }
 
-    public function parseURI($uri = null)
+    public function parseURI(string $uri = null)
     {
-        $uri = strtok($uri == null ? $this->uri : $uri, '&'); //getting rid of url params
+        $request_uri = $uri == null ? $this->uri : $uri;
+        $request_uri = str_replace('?', '&', $request_uri);
+        $uri = strtok($request_uri, '&'); //getting rid of url params
         $result = explode('/', $uri);
 
         //deleting empty parts
@@ -36,7 +38,7 @@ class URL
         return $result;
     }
 
-    public function matchPattern($pattern)
+    public function matchPattern(string $pattern)
     {
         $parsed_uri = $this->parseURI();
         $parsed_pattern = $this->parseURI($pattern);
