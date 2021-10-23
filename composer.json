@@ -1,0 +1,22 @@
+{
+    "name": "ctyurk15/molot-router",
+    "version": "0.1",
+    "description": "Simple & light router for PHP",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yurii Hrytsak"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "MolotRouter\\": "src"
+        }
+    }
+}
