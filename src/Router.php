@@ -3,35 +3,61 @@
 namespace MolotRouter;
 
 use MolotRouter\URL;
+use MolotRouter\Route;
 
 class Router
 {
     private $routes;
-    private $not_found_action;
+    private $not_found_route;
 
-    public function __construct(array $routes = null, string $not_found_action = null)
+    public function __construct(array $routes = null, $not_found_route = null)
     {
-        $this->routes = $routes;
-        $this->not_found_action = $not_found_action;
+       //converting array routes to Routes::class
+        if($routes != null)
+        {
+            foreach($routes as $route)
+            {
+                if(is_array($route))
+                {
+                    $route = new Route(...array_values($route));
+                }
+                $this->routes[] = $route;
+            }
+        }
+
+        if($not_found_route != null)
+        {
+            $this->not_found_route = is_array($not_found_route) ? new Route(...$not_found_route) : $not_found_route;
+        } 
     }
 
     public function getRoutemap()
     {
-        return $this->routes;
+        $result = [];
+
+        foreach($this->routes as $route)
+        {
+            $result[] = $route->getMap();
+        }
+
+        return $result;
     }
 
-    public function getRouteAction(URL $url, string $method)
+    public function getRoute(URL $url, string $method)
     {
         //checking each route if pattern & method fits
         foreach($this->routes as $route)
         {
-            if($url->matchPattern($route['pattern']) && $route['method'] == $method)
+            $match_result = $url->matchPattern($route->pattern);
+
+            if($match_result['result'] && $route->method == $method)
             {
-                return $route['action'];
+                $route->values = $match_result['values'];
+                return $route;
             }
         }
 
         //returning predefined `404` action
-        return $this->not_found_action;
+        return $this->not_found_route;
     }
 }

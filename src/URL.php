@@ -42,10 +42,11 @@ class URL
     {
         $parsed_uri = $this->parseURI();
         $parsed_pattern = $this->parseURI($pattern);
+        $arguments = [];
 
         if(count($parsed_uri) != count($parsed_pattern))
         {
-            return false;
+            return ['result' => false];
         }
 
         foreach($parsed_pattern as $index => $pattern_slug)
@@ -55,11 +56,15 @@ class URL
             {
                 if($pattern_slug != $parsed_uri[$index])
                 {
-                    return false;
+                    return ['result' => false];
                 }
+            }
+            else
+            {
+                $arguments[] = $parsed_uri[$index];
             }
         }
 
-        return true;
+        return ['result' => true, 'values' => $arguments];
     }
 }
