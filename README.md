@@ -3,6 +3,9 @@
 Simple router for php.
 
 Installation: 
+```
+composer require ctyurk15/molot-router
+```
 
 Example:
 ```php
