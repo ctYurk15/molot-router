@@ -2,12 +2,21 @@
 
 Simple router for php.
 
-Installation: 
+# Installation
+
+To install this package you need to:
+1. Install composer
+2. Add line to your composer.json file in project folder:
+```
+"minimum-stability": "dev"
+```
+3. Go to your project folder with console
+4. Write down next command:
 ```
 composer require ctyurk15/molot-router
 ```
 
-Example:
+# Example:
 ```php
 <?php
 
