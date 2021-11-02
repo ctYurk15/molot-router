@@ -77,3 +77,12 @@ $route = $router->getRoute($url, $_SERVER['REQUEST_METHOD']);
 //executing his action
 $route->execute();
 ```
+
+# !!! IMPORTANT !!!
+You should redirect all requests to file, that executes router. For example, .htaccess code:
+```
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ /index.php [L,QSA]
+```
