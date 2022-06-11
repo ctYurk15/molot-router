@@ -5,10 +5,12 @@ namespace MolotRouter;
 class URL
 {
     private $uri = "";
+    private $domain_name = "";
 
     public function __construct(string $uri = null)
     {
         $this->uri = $uri;
+        $this->domain_name = preg_replace('/index\.php|\//', '', $_SERVER['SCRIPT_NAME']);
     }
 
     public function getURI()
@@ -20,6 +22,7 @@ class URL
     {
         $request_uri = $uri == null ? $this->uri : $uri;
         $request_uri = str_replace('?', '&', $request_uri);
+        $request_uri = str_replace($this->domain_name, '', $request_uri);
         $uri = strtok($request_uri, '&'); //getting rid of url params
         $result = explode('/', $uri);
 

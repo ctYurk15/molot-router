@@ -12,7 +12,7 @@ class Router
 
     public function __construct(array $routes = null, $not_found_route = null)
     {
-       //converting array routes to Routes::class
+        //converting array routes to Routes::class
         if($routes != null)
         {
             foreach($routes as $route)
@@ -28,7 +28,7 @@ class Router
         if($not_found_route != null)
         {
             $this->not_found_route = is_array($not_found_route) ? new Route(...$not_found_route) : $not_found_route;
-        } 
+        }
     }
 
     public function getRoutemap()
